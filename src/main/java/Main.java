@@ -9,6 +9,8 @@ import java.io.OutputStream;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        System.out.println(3);
+        new java.io.PrintStream("Hello").println("Hello");
         String sourceFilePath = "/home/hub/workspace/Literature/src/main/resources/test.li";
         Parser parser = new Parser();
         CharStream sourceCode = new ANTLRFileStream(sourceFilePath);

@@ -23,11 +23,13 @@ public class ClassGenerator {
         MethodVisitor mv = classWriter.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,
                 "main", "([Ljava/lang/String;)V", null, null);
         mv.visitCode();
-
+        mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
         ExpressionGenerator expressionGenerator = new ExpressionGenerator(mv);
         expressionGenerator.generate(expression);
 
+        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "Ljava/io/PrintStream;", "println", "(I)V", false);
         mv.visitInsn(Opcodes.RETURN);
+        mv.visitMaxs(-1, -1);
         mv.visitEnd();
         classWriter.visitEnd();
 
