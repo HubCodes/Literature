@@ -9,7 +9,7 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  * by {@link LiteratureParser}.
  *
  * @param <T> The return type of the visit operation. Use {@link Void} for
- *            operations with no return type.
+ * operations with no return type.
  */
 public interface LiteratureVisitor<T> extends ParseTreeVisitor<T> {
     /**
@@ -21,31 +21,13 @@ public interface LiteratureVisitor<T> extends ParseTreeVisitor<T> {
     T visitCompilationUnit(LiteratureParser.CompilationUnitContext ctx);
 
     /**
-     * Visit a parse tree produced by the {@code SubtractExpression}
+     * Visit a parse tree produced by the {@code AdditiveExpression}
      * labeled alternative in {@link LiteratureParser#expression}.
      *
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitSubtractExpression(LiteratureParser.SubtractExpressionContext ctx);
-
-    /**
-     * Visit a parse tree produced by the {@code DivideExpression}
-     * labeled alternative in {@link LiteratureParser#expression}.
-     *
-     * @param ctx the parse tree
-     * @return the visitor result
-     */
-    T visitDivideExpression(LiteratureParser.DivideExpressionContext ctx);
-
-    /**
-     * Visit a parse tree produced by the {@code AddExpression}
-     * labeled alternative in {@link LiteratureParser#expression}.
-     *
-     * @param ctx the parse tree
-     * @return the visitor result
-     */
-    T visitAddExpression(LiteratureParser.AddExpressionContext ctx);
+    T visitAdditiveExpression(LiteratureParser.AdditiveExpressionContext ctx);
 
     /**
      * Visit a parse tree produced by the {@code ValueExpression}
@@ -57,13 +39,13 @@ public interface LiteratureVisitor<T> extends ParseTreeVisitor<T> {
     T visitValueExpression(LiteratureParser.ValueExpressionContext ctx);
 
     /**
-     * Visit a parse tree produced by the {@code MultiplyExpression}
+     * Visit a parse tree produced by the {@code MultiplicativeExpression}
      * labeled alternative in {@link LiteratureParser#expression}.
      *
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitMultiplyExpression(LiteratureParser.MultiplyExpressionContext ctx);
+    T visitMultiplicativeExpression(LiteratureParser.MultiplicativeExpressionContext ctx);
 
     /**
      * Visit a parse tree produced by {@link LiteratureParser#value}.

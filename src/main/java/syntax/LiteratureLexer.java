@@ -19,20 +19,20 @@ public class LiteratureLexer extends Lexer {
     protected static final PredictionContextCache _sharedContextCache =
             new PredictionContextCache();
     public static final int
-            T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, NUMBER = 5, WS = 6;
+            MULTIPLY = 1, DIVIDE = 2, ADD = 3, SUBTRACT = 4, NUMBER = 5, WS = 6;
     public static String[] modeNames = {
             "DEFAULT_MODE"
     };
 
     public static final String[] ruleNames = {
-            "T__0", "T__1", "T__2", "T__3", "NUMBER", "WS"
+            "MULTIPLY", "DIVIDE", "ADD", "SUBTRACT", "NUMBER", "WS"
     };
 
     private static final String[] _LITERAL_NAMES = {
             null, "'*'", "'/'", "'+'", "'-'"
     };
     private static final String[] _SYMBOLIC_NAMES = {
-            null, null, null, null, null, "NUMBER", "WS"
+            null, "MULTIPLY", "DIVIDE", "ADD", "SUBTRACT", "NUMBER", "WS"
     };
     public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 

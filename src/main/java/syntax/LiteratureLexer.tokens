@@ -1,7 +1,7 @@
-T__0=1
-T__1=2
-T__2=3
-T__3=4
+MULTIPLY=1
+DIVIDE=2
+ADD=3
+SUBTRACT=4
 NUMBER=5
 WS=6
 '*'=1

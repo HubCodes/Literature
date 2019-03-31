@@ -23,7 +23,7 @@ public class LiteratureParser extends Parser {
     protected static final PredictionContextCache _sharedContextCache =
             new PredictionContextCache();
     public static final int
-            T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, NUMBER = 5, WS = 6;
+            MULTIPLY = 1, DIVIDE = 2, ADD = 3, SUBTRACT = 4, NUMBER = 5, WS = 6;
     public static final int
             RULE_compilationUnit = 0, RULE_expression = 1, RULE_value = 2;
     public static final String[] ruleNames = {
@@ -34,7 +34,7 @@ public class LiteratureParser extends Parser {
             null, "'*'", "'/'", "'+'", "'-'"
     };
     private static final String[] _SYMBOLIC_NAMES = {
-            null, null, null, null, null, "NUMBER", "WS"
+            null, "MULTIPLY", "DIVIDE", "ADD", "SUBTRACT", "NUMBER", "WS"
     };
     public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -160,7 +160,7 @@ public class LiteratureParser extends Parser {
         }
     }
 
-    public static class SubtractExpressionContext extends ExpressionContext {
+    public static class AdditiveExpressionContext extends ExpressionContext {
         public Token op;
 
         public List<ExpressionContext> expression() {
@@ -171,60 +171,22 @@ public class LiteratureParser extends Parser {
             return getRuleContext(ExpressionContext.class, i);
         }
 
-        public SubtractExpressionContext(ExpressionContext ctx) {
+        public TerminalNode ADD() {
+            return getToken(LiteratureParser.ADD, 0);
+        }
+
+        public TerminalNode SUBTRACT() {
+            return getToken(LiteratureParser.SUBTRACT, 0);
+        }
+
+        public AdditiveExpressionContext(ExpressionContext ctx) {
             copyFrom(ctx);
         }
 
         @Override
         public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
             if (visitor instanceof LiteratureVisitor)
-                return ((LiteratureVisitor<? extends T>) visitor).visitSubtractExpression(this);
-            else return visitor.visitChildren(this);
-        }
-    }
-
-    public static class DivideExpressionContext extends ExpressionContext {
-        public Token op;
-
-        public List<ExpressionContext> expression() {
-            return getRuleContexts(ExpressionContext.class);
-        }
-
-        public ExpressionContext expression(int i) {
-            return getRuleContext(ExpressionContext.class, i);
-        }
-
-        public DivideExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-            if (visitor instanceof LiteratureVisitor)
-                return ((LiteratureVisitor<? extends T>) visitor).visitDivideExpression(this);
-            else return visitor.visitChildren(this);
-        }
-    }
-
-    public static class AddExpressionContext extends ExpressionContext {
-        public Token op;
-
-        public List<ExpressionContext> expression() {
-            return getRuleContexts(ExpressionContext.class);
-        }
-
-        public ExpressionContext expression(int i) {
-            return getRuleContext(ExpressionContext.class, i);
-        }
-
-        public AddExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-            if (visitor instanceof LiteratureVisitor)
-                return ((LiteratureVisitor<? extends T>) visitor).visitAddExpression(this);
+                return ((LiteratureVisitor<? extends T>) visitor).visitAdditiveExpression(this);
             else return visitor.visitChildren(this);
         }
     }
@@ -246,7 +208,7 @@ public class LiteratureParser extends Parser {
         }
     }
 
-    public static class MultiplyExpressionContext extends ExpressionContext {
+    public static class MultiplicativeExpressionContext extends ExpressionContext {
         public Token op;
 
         public List<ExpressionContext> expression() {
@@ -257,14 +219,22 @@ public class LiteratureParser extends Parser {
             return getRuleContext(ExpressionContext.class, i);
         }
 
-        public MultiplyExpressionContext(ExpressionContext ctx) {
+        public TerminalNode MULTIPLY() {
+            return getToken(LiteratureParser.MULTIPLY, 0);
+        }
+
+        public TerminalNode DIVIDE() {
+            return getToken(LiteratureParser.DIVIDE, 0);
+        }
+
+        public MultiplicativeExpressionContext(ExpressionContext ctx) {
             copyFrom(ctx);
         }
 
         @Override
         public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
             if (visitor instanceof LiteratureVisitor)
-                return ((LiteratureVisitor<? extends T>) visitor).visitMultiplyExpression(this);
+                return ((LiteratureVisitor<? extends T>) visitor).visitMultiplicativeExpression(this);
             else return visitor.visitChildren(this);
         }
     }
@@ -280,6 +250,7 @@ public class LiteratureParser extends Parser {
         ExpressionContext _prevctx = _localctx;
         int _startState = 2;
         enterRecursionRule(_localctx, 2, RULE_expression, _p);
+        int _la;
         try {
             int _alt;
             enterOuterAlt(_localctx, 1);
@@ -293,7 +264,7 @@ public class LiteratureParser extends Parser {
                     value();
                 }
                 _ctx.stop = _input.LT(-1);
-                setState(26);
+                setState(20);
                 _errHandler.sync(this);
                 _alt = getInterpreter().adaptivePredict(_input, 1, _ctx);
                 while (_alt != 2 && _alt != org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER) {
@@ -301,60 +272,48 @@ public class LiteratureParser extends Parser {
                         if (_parseListeners != null) triggerExitRuleEvent();
                         _prevctx = _localctx;
                         {
-                            setState(24);
+                            setState(18);
                             switch (getInterpreter().adaptivePredict(_input, 0, _ctx)) {
                                 case 1: {
-                                    _localctx = new MultiplyExpressionContext(new ExpressionContext(_parentctx, _parentState));
+                                    _localctx = new MultiplicativeExpressionContext(new ExpressionContext(_parentctx, _parentState));
                                     pushNewRecursionContext(_localctx, _startState, RULE_expression);
                                     setState(12);
-                                    if (!(precpred(_ctx, 5)))
-                                        throw new FailedPredicateException(this, "precpred(_ctx, 5)");
-                                    setState(13);
-                                    ((MultiplyExpressionContext) _localctx).op = match(T__0);
-                                    setState(14);
-                                    expression(6);
-                                }
-                                break;
-                                case 2: {
-                                    _localctx = new DivideExpressionContext(new ExpressionContext(_parentctx, _parentState));
-                                    pushNewRecursionContext(_localctx, _startState, RULE_expression);
-                                    setState(15);
-                                    if (!(precpred(_ctx, 4)))
-                                        throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-                                    setState(16);
-                                    ((DivideExpressionContext) _localctx).op = match(T__1);
-                                    setState(17);
-                                    expression(5);
-                                }
-                                break;
-                                case 3: {
-                                    _localctx = new AddExpressionContext(new ExpressionContext(_parentctx, _parentState));
-                                    pushNewRecursionContext(_localctx, _startState, RULE_expression);
-                                    setState(18);
                                     if (!(precpred(_ctx, 3)))
                                         throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-                                    setState(19);
-                                    ((AddExpressionContext) _localctx).op = match(T__2);
-                                    setState(20);
+                                    setState(13);
+                                    ((MultiplicativeExpressionContext) _localctx).op = _input.LT(1);
+                                    _la = _input.LA(1);
+                                    if (!(_la == MULTIPLY || _la == DIVIDE)) {
+                                        ((MultiplicativeExpressionContext) _localctx).op = (Token) _errHandler.recoverInline(this);
+                                    } else {
+                                        consume();
+                                    }
+                                    setState(14);
                                     expression(4);
                                 }
                                 break;
-                                case 4: {
-                                    _localctx = new SubtractExpressionContext(new ExpressionContext(_parentctx, _parentState));
+                                case 2: {
+                                    _localctx = new AdditiveExpressionContext(new ExpressionContext(_parentctx, _parentState));
                                     pushNewRecursionContext(_localctx, _startState, RULE_expression);
-                                    setState(21);
+                                    setState(15);
                                     if (!(precpred(_ctx, 2)))
                                         throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-                                    setState(22);
-                                    ((SubtractExpressionContext) _localctx).op = match(T__3);
-                                    setState(23);
+                                    setState(16);
+                                    ((AdditiveExpressionContext) _localctx).op = _input.LT(1);
+                                    _la = _input.LA(1);
+                                    if (!(_la == ADD || _la == SUBTRACT)) {
+                                        ((AdditiveExpressionContext) _localctx).op = (Token) _errHandler.recoverInline(this);
+                                    } else {
+                                        consume();
+                                    }
+                                    setState(17);
                                     expression(3);
                                 }
                                 break;
                             }
                         }
                     }
-                    setState(28);
+                    setState(22);
                     _errHandler.sync(this);
                     _alt = getInterpreter().adaptivePredict(_input, 1, _ctx);
                 }
@@ -397,7 +356,7 @@ public class LiteratureParser extends Parser {
         try {
             enterOuterAlt(_localctx, 1);
             {
-                setState(29);
+                setState(23);
                 match(NUMBER);
             }
         } catch (RecognitionException re) {
@@ -421,28 +380,22 @@ public class LiteratureParser extends Parser {
     private boolean expression_sempred(ExpressionContext _localctx, int predIndex) {
         switch (predIndex) {
             case 0:
-                return precpred(_ctx, 5);
-            case 1:
-                return precpred(_ctx, 4);
-            case 2:
                 return precpred(_ctx, 3);
-            case 3:
+            case 1:
                 return precpred(_ctx, 2);
         }
         return true;
     }
 
     public static final String _serializedATN =
-            "\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\b\"\4\2\t\2\4\3\t" +
-                    "\3\4\4\t\4\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3" +
-                    "\3\3\3\3\3\3\7\3\33\n\3\f\3\16\3\36\13\3\3\4\3\4\3\4\2\3\4\5\2\4\6\2\2" +
-                    "\"\2\b\3\2\2\2\4\13\3\2\2\2\6\37\3\2\2\2\b\t\5\4\3\2\t\n\7\2\2\3\n\3\3" +
-                    "\2\2\2\13\f\b\3\1\2\f\r\5\6\4\2\r\34\3\2\2\2\16\17\f\7\2\2\17\20\7\3\2" +
-                    "\2\20\33\5\4\3\b\21\22\f\6\2\2\22\23\7\4\2\2\23\33\5\4\3\7\24\25\f\5\2" +
-                    "\2\25\26\7\5\2\2\26\33\5\4\3\6\27\30\f\4\2\2\30\31\7\6\2\2\31\33\5\4\3" +
-                    "\5\32\16\3\2\2\2\32\21\3\2\2\2\32\24\3\2\2\2\32\27\3\2\2\2\33\36\3\2\2" +
-                    "\2\34\32\3\2\2\2\34\35\3\2\2\2\35\5\3\2\2\2\36\34\3\2\2\2\37 \7\7\2\2" +
-                    " \7\3\2\2\2\4\32\34";
+            "\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\b\34\4\2\t\2\4\3" +
+                    "\t\3\4\4\t\4\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3\25\n" +
+                    "\3\f\3\16\3\30\13\3\3\4\3\4\3\4\2\3\4\5\2\4\6\2\4\3\2\3\4\3\2\5\6\32\2" +
+                    "\b\3\2\2\2\4\13\3\2\2\2\6\31\3\2\2\2\b\t\5\4\3\2\t\n\7\2\2\3\n\3\3\2\2" +
+                    "\2\13\f\b\3\1\2\f\r\5\6\4\2\r\26\3\2\2\2\16\17\f\5\2\2\17\20\t\2\2\2\20" +
+                    "\25\5\4\3\6\21\22\f\4\2\2\22\23\t\3\2\2\23\25\5\4\3\5\24\16\3\2\2\2\24" +
+                    "\21\3\2\2\2\25\30\3\2\2\2\26\24\3\2\2\2\26\27\3\2\2\2\27\5\3\2\2\2\30" +
+                    "\26\3\2\2\2\31\32\7\7\2\2\32\7\3\2\2\2\4\24\26";
     public static final ATN _ATN =
             new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 

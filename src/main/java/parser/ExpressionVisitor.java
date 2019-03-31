@@ -19,22 +19,12 @@ public class ExpressionVisitor extends LiteratureBaseVisitor<Expression> {
     }
 
     @Override
-    public Expression visitMultiplyExpression(MultiplyExpressionContext ctx) {
-        return arithmeticExpressionVisitor.visitMultiplyExpression(ctx);
+    public Expression visitMultiplicativeExpression(MultiplicativeExpressionContext ctx) {
+        return arithmeticExpressionVisitor.visitMultiplicativeExpression(ctx);
     }
 
     @Override
-    public Expression visitDivideExpression(DivideExpressionContext ctx) {
-        return arithmeticExpressionVisitor.visitDivideExpression(ctx);
-    }
-
-    @Override
-    public Expression visitAddExpression(AddExpressionContext ctx) {
-        return arithmeticExpressionVisitor.visitAddExpression(ctx);
-    }
-
-    @Override
-    public Expression visitSubtractExpression(SubtractExpressionContext ctx) {
-        return arithmeticExpressionVisitor.visitSubtractExpression(ctx);
+    public Expression visitAdditiveExpression(AdditiveExpressionContext ctx) {
+        return arithmeticExpressionVisitor.visitAdditiveExpression(ctx);
     }
 }
