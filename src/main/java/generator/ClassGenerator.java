@@ -25,8 +25,7 @@ public class ClassGenerator {
         mv.visitCode();
         mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
         ExpressionGenerator expressionGenerator = new ExpressionGenerator(mv);
-        expressionGenerator.generate(expression);
-
+        expression.accept(expressionGenerator);
         mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "Ljava/io/PrintStream;", "println", "(I)V", false);
         mv.visitInsn(Opcodes.RETURN);
         mv.visitMaxs(-1, -1);
