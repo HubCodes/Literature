@@ -23,18 +23,19 @@ public class LiteratureParser extends Parser {
     protected static final PredictionContextCache _sharedContextCache =
             new PredictionContextCache();
     public static final int
-            MULTIPLY = 1, DIVIDE = 2, ADD = 3, SUBTRACT = 4, NUMBER = 5, WS = 6;
+            T__0 = 1, T__1 = 2, MULTIPLY = 3, DIVIDE = 4, ADD = 5, SUBTRACT = 6, NUMBER = 7, WS = 8;
     public static final int
-            RULE_compilationUnit = 0, RULE_expression = 1, RULE_value = 2;
+            RULE_compilationUnit = 0, RULE_expression = 1, RULE_primaryExpression = 2,
+            RULE_value = 3;
     public static final String[] ruleNames = {
-            "compilationUnit", "expression", "value"
+            "compilationUnit", "expression", "primaryExpression", "value"
     };
 
     private static final String[] _LITERAL_NAMES = {
-            null, "'*'", "'/'", "'+'", "'-'"
+            null, "'('", "')'", "'*'", "'/'", "'+'", "'-'"
     };
     private static final String[] _SYMBOLIC_NAMES = {
-            null, "MULTIPLY", "DIVIDE", "ADD", "SUBTRACT", "NUMBER", "WS"
+            null, null, null, "MULTIPLY", "DIVIDE", "ADD", "SUBTRACT", "NUMBER", "WS"
     };
     public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -127,9 +128,9 @@ public class LiteratureParser extends Parser {
         try {
             enterOuterAlt(_localctx, 1);
             {
-                setState(6);
+                setState(8);
                 expression(0);
-                setState(7);
+                setState(9);
                 match(EOF);
             }
         } catch (RecognitionException re) {
@@ -191,19 +192,19 @@ public class LiteratureParser extends Parser {
         }
     }
 
-    public static class ValueExpressionContext extends ExpressionContext {
-        public ValueContext value() {
-            return getRuleContext(ValueContext.class, 0);
+    public static class PrimExpressionContext extends ExpressionContext {
+        public PrimaryExpressionContext primaryExpression() {
+            return getRuleContext(PrimaryExpressionContext.class, 0);
         }
 
-        public ValueExpressionContext(ExpressionContext ctx) {
+        public PrimExpressionContext(ExpressionContext ctx) {
             copyFrom(ctx);
         }
 
         @Override
         public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
             if (visitor instanceof LiteratureVisitor)
-                return ((LiteratureVisitor<? extends T>) visitor).visitValueExpression(this);
+                return ((LiteratureVisitor<? extends T>) visitor).visitPrimExpression(this);
             else return visitor.visitChildren(this);
         }
     }
@@ -256,15 +257,15 @@ public class LiteratureParser extends Parser {
             enterOuterAlt(_localctx, 1);
             {
                 {
-                    _localctx = new ValueExpressionContext(_localctx);
+                    _localctx = new PrimExpressionContext(_localctx);
                     _ctx = _localctx;
                     _prevctx = _localctx;
 
-                    setState(10);
-                    value();
+                    setState(12);
+                    primaryExpression();
                 }
                 _ctx.stop = _input.LT(-1);
-                setState(20);
+                setState(22);
                 _errHandler.sync(this);
                 _alt = getInterpreter().adaptivePredict(_input, 1, _ctx);
                 while (_alt != 2 && _alt != org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER) {
@@ -272,15 +273,15 @@ public class LiteratureParser extends Parser {
                         if (_parseListeners != null) triggerExitRuleEvent();
                         _prevctx = _localctx;
                         {
-                            setState(18);
+                            setState(20);
                             switch (getInterpreter().adaptivePredict(_input, 0, _ctx)) {
                                 case 1: {
                                     _localctx = new MultiplicativeExpressionContext(new ExpressionContext(_parentctx, _parentState));
                                     pushNewRecursionContext(_localctx, _startState, RULE_expression);
-                                    setState(12);
+                                    setState(14);
                                     if (!(precpred(_ctx, 3)))
                                         throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-                                    setState(13);
+                                    setState(15);
                                     ((MultiplicativeExpressionContext) _localctx).op = _input.LT(1);
                                     _la = _input.LA(1);
                                     if (!(_la == MULTIPLY || _la == DIVIDE)) {
@@ -288,17 +289,17 @@ public class LiteratureParser extends Parser {
                                     } else {
                                         consume();
                                     }
-                                    setState(14);
+                                    setState(16);
                                     expression(4);
                                 }
                                 break;
                                 case 2: {
                                     _localctx = new AdditiveExpressionContext(new ExpressionContext(_parentctx, _parentState));
                                     pushNewRecursionContext(_localctx, _startState, RULE_expression);
-                                    setState(15);
+                                    setState(17);
                                     if (!(precpred(_ctx, 2)))
                                         throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-                                    setState(16);
+                                    setState(18);
                                     ((AdditiveExpressionContext) _localctx).op = _input.LT(1);
                                     _la = _input.LA(1);
                                     if (!(_la == ADD || _la == SUBTRACT)) {
@@ -306,14 +307,14 @@ public class LiteratureParser extends Parser {
                                     } else {
                                         consume();
                                     }
-                                    setState(17);
+                                    setState(19);
                                     expression(3);
                                 }
                                 break;
                             }
                         }
                     }
-                    setState(22);
+                    setState(24);
                     _errHandler.sync(this);
                     _alt = getInterpreter().adaptivePredict(_input, 1, _ctx);
                 }
@@ -324,6 +325,97 @@ public class LiteratureParser extends Parser {
             _errHandler.recover(this, re);
         } finally {
             unrollRecursionContexts(_parentctx);
+        }
+        return _localctx;
+    }
+
+    public static class PrimaryExpressionContext extends ParserRuleContext {
+        public PrimaryExpressionContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_primaryExpression;
+        }
+
+        public PrimaryExpressionContext() {
+        }
+
+        public void copyFrom(PrimaryExpressionContext ctx) {
+            super.copyFrom(ctx);
+        }
+    }
+
+    public static class NestedExpressionContext extends PrimaryExpressionContext {
+        public ExpressionContext expression() {
+            return getRuleContext(ExpressionContext.class, 0);
+        }
+
+        public NestedExpressionContext(PrimaryExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        @Override
+        public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+            if (visitor instanceof LiteratureVisitor)
+                return ((LiteratureVisitor<? extends T>) visitor).visitNestedExpression(this);
+            else return visitor.visitChildren(this);
+        }
+    }
+
+    public static class ValueExpressionContext extends PrimaryExpressionContext {
+        public ValueContext value() {
+            return getRuleContext(ValueContext.class, 0);
+        }
+
+        public ValueExpressionContext(PrimaryExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        @Override
+        public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+            if (visitor instanceof LiteratureVisitor)
+                return ((LiteratureVisitor<? extends T>) visitor).visitValueExpression(this);
+            else return visitor.visitChildren(this);
+        }
+    }
+
+    public final PrimaryExpressionContext primaryExpression() throws RecognitionException {
+        PrimaryExpressionContext _localctx = new PrimaryExpressionContext(_ctx, getState());
+        enterRule(_localctx, 4, RULE_primaryExpression);
+        try {
+            setState(30);
+            switch (_input.LA(1)) {
+                case NUMBER:
+                    _localctx = new ValueExpressionContext(_localctx);
+                    enterOuterAlt(_localctx, 1);
+                {
+                    setState(25);
+                    value();
+                }
+                break;
+                case T__0:
+                    _localctx = new NestedExpressionContext(_localctx);
+                    enterOuterAlt(_localctx, 2);
+                {
+                    setState(26);
+                    match(T__0);
+                    setState(27);
+                    expression(0);
+                    setState(28);
+                    match(T__1);
+                }
+                break;
+                default:
+                    throw new NoViableAltException(this);
+            }
+        } catch (RecognitionException re) {
+            _localctx.exception = re;
+            _errHandler.reportError(this, re);
+            _errHandler.recover(this, re);
+        } finally {
+            exitRule();
         }
         return _localctx;
     }
@@ -352,11 +444,11 @@ public class LiteratureParser extends Parser {
 
     public final ValueContext value() throws RecognitionException {
         ValueContext _localctx = new ValueContext(_ctx, getState());
-        enterRule(_localctx, 4, RULE_value);
+        enterRule(_localctx, 6, RULE_value);
         try {
             enterOuterAlt(_localctx, 1);
             {
-                setState(23);
+                setState(32);
                 match(NUMBER);
             }
         } catch (RecognitionException re) {
@@ -388,14 +480,16 @@ public class LiteratureParser extends Parser {
     }
 
     public static final String _serializedATN =
-            "\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\b\34\4\2\t\2\4\3" +
-                    "\t\3\4\4\t\4\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3\25\n" +
-                    "\3\f\3\16\3\30\13\3\3\4\3\4\3\4\2\3\4\5\2\4\6\2\4\3\2\3\4\3\2\5\6\32\2" +
-                    "\b\3\2\2\2\4\13\3\2\2\2\6\31\3\2\2\2\b\t\5\4\3\2\t\n\7\2\2\3\n\3\3\2\2" +
-                    "\2\13\f\b\3\1\2\f\r\5\6\4\2\r\26\3\2\2\2\16\17\f\5\2\2\17\20\t\2\2\2\20" +
-                    "\25\5\4\3\6\21\22\f\4\2\2\22\23\t\3\2\2\23\25\5\4\3\5\24\16\3\2\2\2\24" +
-                    "\21\3\2\2\2\25\30\3\2\2\2\26\24\3\2\2\2\26\27\3\2\2\2\27\5\3\2\2\2\30" +
-                    "\26\3\2\2\2\31\32\7\7\2\2\32\7\3\2\2\2\4\24\26";
+            "\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\n%\4\2\t\2\4\3\t" +
+                    "\3\4\4\t\4\4\5\t\5\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3" +
+                    "\27\n\3\f\3\16\3\32\13\3\3\4\3\4\3\4\3\4\3\4\5\4!\n\4\3\5\3\5\3\5\2\3" +
+                    "\4\6\2\4\6\b\2\4\3\2\5\6\3\2\7\b#\2\n\3\2\2\2\4\r\3\2\2\2\6 \3\2\2\2\b" +
+                    "\"\3\2\2\2\n\13\5\4\3\2\13\f\7\2\2\3\f\3\3\2\2\2\r\16\b\3\1\2\16\17\5" +
+                    "\6\4\2\17\30\3\2\2\2\20\21\f\5\2\2\21\22\t\2\2\2\22\27\5\4\3\6\23\24\f" +
+                    "\4\2\2\24\25\t\3\2\2\25\27\5\4\3\5\26\20\3\2\2\2\26\23\3\2\2\2\27\32\3" +
+                    "\2\2\2\30\26\3\2\2\2\30\31\3\2\2\2\31\5\3\2\2\2\32\30\3\2\2\2\33!\5\b" +
+                    "\5\2\34\35\7\3\2\2\35\36\5\4\3\2\36\37\7\4\2\2\37!\3\2\2\2 \33\3\2\2\2" +
+                    " \34\3\2\2\2!\7\3\2\2\2\"#\7\t\2\2#\t\3\2\2\2\5\26\30 ";
     public static final ATN _ATN =
             new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 

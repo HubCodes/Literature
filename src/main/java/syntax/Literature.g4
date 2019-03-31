@@ -6,10 +6,11 @@ package syntax;
 
 // Parser
 compilationUnit: expression EOF ;
-
 expression: expression op = ( MULTIPLY | DIVIDE ) expression #MultiplicativeExpression
           | expression op = ( ADD | SUBTRACT ) expression #AdditiveExpression
-          | value #ValueExpression ;
+          | primaryExpression #PrimExpression ;
+primaryExpression: value #ValueExpression
+                 | '(' expression ')' #NestedExpression ;
 value: NUMBER ;
 
 // Lexer

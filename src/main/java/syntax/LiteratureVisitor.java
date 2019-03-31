@@ -30,13 +30,13 @@ public interface LiteratureVisitor<T> extends ParseTreeVisitor<T> {
     T visitAdditiveExpression(LiteratureParser.AdditiveExpressionContext ctx);
 
     /**
-     * Visit a parse tree produced by the {@code ValueExpression}
+     * Visit a parse tree produced by the {@code PrimExpression}
      * labeled alternative in {@link LiteratureParser#expression}.
      *
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitValueExpression(LiteratureParser.ValueExpressionContext ctx);
+    T visitPrimExpression(LiteratureParser.PrimExpressionContext ctx);
 
     /**
      * Visit a parse tree produced by the {@code MultiplicativeExpression}
@@ -46,6 +46,24 @@ public interface LiteratureVisitor<T> extends ParseTreeVisitor<T> {
      * @return the visitor result
      */
     T visitMultiplicativeExpression(LiteratureParser.MultiplicativeExpressionContext ctx);
+
+    /**
+     * Visit a parse tree produced by the {@code ValueExpression}
+     * labeled alternative in {@link LiteratureParser#primaryExpression}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitValueExpression(LiteratureParser.ValueExpressionContext ctx);
+
+    /**
+     * Visit a parse tree produced by the {@code NestedExpression}
+     * labeled alternative in {@link LiteratureParser#primaryExpression}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitNestedExpression(LiteratureParser.NestedExpressionContext ctx);
 
     /**
      * Visit a parse tree produced by {@link LiteratureParser#value}.

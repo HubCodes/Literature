@@ -42,7 +42,7 @@ public class LiteratureBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override
-    public T visitValueExpression(LiteratureParser.ValueExpressionContext ctx) {
+    public T visitPrimExpression(LiteratureParser.PrimExpressionContext ctx) {
         return visitChildren(ctx);
     }
 
@@ -54,6 +54,28 @@ public class LiteratureBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
      */
     @Override
     public T visitMultiplicativeExpression(LiteratureParser.MultiplicativeExpressionContext ctx) {
+        return visitChildren(ctx);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override
+    public T visitValueExpression(LiteratureParser.ValueExpressionContext ctx) {
+        return visitChildren(ctx);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
+    @Override
+    public T visitNestedExpression(LiteratureParser.NestedExpressionContext ctx) {
         return visitChildren(ctx);
     }
 
